@@ -25,12 +25,16 @@ namespace AppSimpleTest {
         [Test]
         public void TestSave() {
             _vm.Text = "toto";
+            // j'ai créé une méthode SaveItem qui sera appelée par OnSave
              _vm.SaveItem().Wait();
 
+            // je récupère le service DataStore utilisé par NewItemViewModel
             var ds = DependencyService.Get<IDataStore<Item>>();
             var result = ds.GetItemsAsync();
             result.Wait();
+            // je prends le dernier élément de ma liste
             var r = result.Result.Last();
+            // je fais ma comparaison
             Assert.AreEqual(_vm.Text, r.Text);
         }
     }
